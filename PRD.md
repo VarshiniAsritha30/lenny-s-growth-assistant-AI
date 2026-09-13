@@ -81,7 +81,7 @@ follow-up content (essays, one-pagers).
 
 | Risk | Mitigation |
 |---|---|
-| Hallucination / fabricated quotes | System prompts forbid it; Ship 30 skill runs a post-hoc quote-verification pass that de-quotes any unverified quotation (`validate_and_repair_quotes`) |
+| Hallucination / fabricated quotes | System prompts forbid it; Ship 30 skill runs a post-hoc quote-verification pass that de-quotes any unverified quotation (`validate_and_repair_quotes`). **Known gap, found by testing:** this check only covers quoted spans — a live test with `llama3.2:3b` produced an unsourced fabricated company name in *unquoted* prose that the current validator doesn't catch. See `agent-transcripts/05-larger-local-model-does-not-help.md` |
 | Retrieval failure / irrelevant retrieval | Hybrid (vector + full-text) retrieval with an absolute cosine-similarity floor, not just relative ranking - see `retriever.py` |
 | Small local model unreliable at subtle instructions | A specific, demoable failure (conflating retrieved excerpts with "prior conversation" on a fresh session) is guarded deterministically in code rather than left to prompting alone - see `grounded_qa.py`'s meta-recap guard |
 | Local model quality / latency | Documented known limitation; architecture is provider-agnostic so a larger model is a config change |

@@ -101,8 +101,12 @@ frontend origin, no SSRF/arbitrary-filesystem surface exposed to the LLM or gene
 
 1. **Ship 30 essay length:** ~660 words against the ~1250-word target with `llama3.2:1b` — the
    pipeline (prompt, token budget, structure) correctly targets 1250 words; the small local model
-   doesn't reliably sustain long-form generation. A larger local model or cloud provider closes
-   this gap with zero code changes.
+   doesn't reliably sustain long-form generation. This was not left as an assumption: `llama3.2:3b`
+   was pulled and tested as the obvious fix, and instead produced a *shorter* essay (612 words)
+   plus an unsourced fabricated claim ("Facebook and Airbnb") that the existing quote-validator
+   didn't catch (it only checks quoted spans). A cloud provider is the more reliable lever for
+   both length and grounding here, not a larger model in the same local family — see
+   `agent-transcripts/05-larger-local-model-does-not-help.md`.
 2. **Docker Compose not live-smoke-tested:** this build machine had no Docker runtime installed.
    The Compose file and Dockerfiles were written carefully and YAML-validated, and every
    underlying piece they orchestrate (migrations, ingestion, backend, frontend) was verified

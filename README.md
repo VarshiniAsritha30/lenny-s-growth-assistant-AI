@@ -166,9 +166,10 @@ ollama pull nomic-embed-text   # embedding model, ~274MB
 ```
 
 Both were chosen to run comfortably on an 8GB-RAM machine with no discrete GPU — the machine this
-was built and verified on. If you have more headroom, a larger local model (e.g. `llama3.2:3b` or
-similar) will noticeably improve answer/essay quality with zero code changes — just update
-`OLLAMA_MODEL`.
+was built and verified on. A larger local model is a zero-code-change swap (`OLLAMA_MODEL`), but
+don't assume "bigger automatically means better grounded" — see the Known Limitations note below,
+which documents a real, tested case where `llama3.2:3b` performed *worse* on grounding for this
+task. A cloud provider (Anthropic/OpenAI) is the more reliable way to improve quality.
 
 ## Cloud LLM setup
 
@@ -279,8 +280,13 @@ normalized fused rank (a normalized score always looks "confident" even when not
 - **Ship 30 essay length with the default local model:** `llama3.2:1b` produced a ~660-word essay
   against the ~1250-word target in this build's testing — small local models don't reliably
   sustain long-form coherent generation. The prompt, token budget, and pipeline all correctly
-  target 1250 words; a larger local model or a cloud provider gets materially closer. See
-  `docs/MANUAL_TEST_PLAN.md` test case 8.
+  target 1250 words. **Tested and confirmed the fix isn't "just use a bigger local model":**
+  `llama3.2:3b` was pulled and tested on the same prompt and produced an even shorter essay (612
+  words) *and* hallucinated unsourced company names ("Facebook and Airbnb") in unquoted prose —
+  the post-hoc quote-verification pass only checks quoted spans, so it didn't catch this. A cloud
+  provider (Anthropic/OpenAI) is the more reliable path to both length and grounding quality
+  here, not a larger local model of the same family. See `docs/MANUAL_TEST_PLAN.md` test case 8
+  and `agent-transcripts/05-larger-local-model-does-not-help.md`.
 - **Docker Compose was not live-smoke-tested** on the build machine (no Docker runtime available)
   — written carefully and YAML-validated, but flagged here rather than claimed as verified.
 - **No live cloud-provider test** — no Anthropic/OpenAI API key was available in this

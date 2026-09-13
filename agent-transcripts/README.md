@@ -19,6 +19,10 @@ the running stack during this build and is cross-referenced from `docs/MANUAL_TE
 - `04-router-and-scoring-bugs.md` - two smaller correctness bugs (an intent-routing regex that
   was too strict, and a groundedness-threshold bug in the retrieval fusion math) found while
   writing the automated test suite.
+- `05-larger-local-model-does-not-help.md` - a documentation correction: pulling a larger local
+  model to fix the Ship 30 essay-length shortfall was tested, not assumed, and found to make
+  things worse (shorter output, plus a new unsourced-fabrication failure mode the existing
+  quote-validator doesn't catch).
 
 ## What's redacted
 

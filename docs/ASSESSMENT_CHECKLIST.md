@@ -16,7 +16,7 @@ Self-review against every requirement in the original brief. Status is honest, n
 | Cite transcript sources | Every grounded answer/artifact carries `sources` | `SourceOut` schema, `SourceChips.tsx` | ✅ Done, verified live |
 | Follow-up questions with context | Conversation history + conversation-aware retrieval query | `app/agents/state.py::build_retrieval_query` | ✅ Done, verified live |
 | Explicit "not enough evidence" behavior | Fixed refusal message when retrieval returns nothing supported | `NO_CONTEXT_FALLBACK`, `test_off_topic_query_returns_no_supported_chunks` | ✅ Done, tested |
-| ~1,250-word Ship 30 essays | Dedicated skill with word-target prompt + quote validation | `app/agents/skills/ship30.py` | ⚠️ Partial — pipeline correct; `llama3.2:1b` output ~660 words in testing (see Known Limitations) |
+| ~1,250-word Ship 30 essays | Dedicated skill with word-target prompt + quote validation | `app/agents/skills/ship30.py` | ⚠️ Partial — pipeline correct; `llama3.2:1b` output ~660 words in testing. Tested (not assumed) that a bigger local model fixes this: `llama3.2:3b` was worse (612 words + an unsourced fabricated company name in unquoted prose). See `agent-transcripts/05-larger-local-model-does-not-help.md` |
 | Markdown artifacts | `artifact_generation` skill, type=markdown | Verified live | ✅ Done |
 | HTML/CSS artifacts | `artifact_generation` skill, type=html | Verified live | ✅ Done |
 | Dedicated Artifact Viewer | `ArtifactPanel.tsx` — Preview/Code, copy/download/regenerate/fullscreen | Verified live in-browser | ✅ Done |
